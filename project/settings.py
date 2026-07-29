@@ -1,36 +1,37 @@
 import os
+from environs import Env
 
-from dotenv import load_dotenv
+# Загружаем переменные окружения из .env
+env = Env()
+env.read_env()
 
-
-load_dotenv()
-
-password = os.getenv('DB_PASSWORD')
-host = os.getenv('DB_HOST')
-port = os.getenv('DB_PORT')
-
+# Сохраняем в переменные для ясности
+DB_HOST = env.str('DB_HOST')
+DB_PORT = env.str('DB_PORT')
+DB_PASSWORD = env.str('DB_PASSWORD')
+DB_SECRET_KEY = env.str('DB_SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': host,
-        'PORT': port,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
         'NAME': 'checkpoint',
         'USER': 'guard',
-        'PASSWORD': password,
+        'PASSWORD': DB_PASSWORD,
     }
 }
 
 INSTALLED_APPS = ['datacenter']
 
-SECRET_KEY = os.getenv('DB_SECRET_KEY')
+SECRET_KEY = DB_SECRET_KEY
 
-DEBUG = True
+DEBUG = DEBUG
 
 ROOT_URLCONF = 'project.urls'
 
 ALLOWED_HOSTS = ['*']
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
@@ -41,13 +42,8 @@ TEMPLATES = [
     },
 ]
 
-
 USE_L10N = True
-
 LANGUAGE_CODE = 'ru-ru'
-
 TIME_ZONE = 'Europe/Moscow'
-
 USE_TZ = True
-
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
