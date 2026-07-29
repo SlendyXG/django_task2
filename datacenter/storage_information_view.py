@@ -9,7 +9,7 @@ from django.utils.timezone import localtime
 
 from .models import Visit
 
-from main import get_duration, format_duration
+from datacenter.passcard_info_view import get_duration, format_duration
 
 
 def storage_information_view(request):
