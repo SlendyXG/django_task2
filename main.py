@@ -34,11 +34,22 @@ if __name__ == "__main__":
     all_visits = Visit.objects.all()
 
     # Только для 10 и 1000 минут
-    test_values = [60]
+    test_values = [1001]
 
     for minutes in test_values:
         long_visits = [visit for visit in all_visits if is_visit_long(visit, minutes)]
-        print(f"Визиты дольше {minutes} мин {long_visits}")
+        # Формируем список визитов с информацией о времени выхода
+        visit_strings = []
+        for visit in long_visits:
+            if visit.leaved_at:
+                exit_time = visit.leaved_at.strftime("%H:%M")
+                visit_strings.append(
+                    f"{visit.passcard.owner_name} вошел в {visit.entered_at.strftime('%H:%M')}, вышел в {exit_time}")
+            else:
+                visit_strings.append(
+                    f"{visit.passcard.owner_name} вошел в {visit.entered_at.strftime('%H:%M')}, еще внутри")
+
+        print(f"Визиты дольше {minutes} мин [{', '.join(visit_strings)}]")
 
 
     #passcard = Passcard.objects.all()[1]
@@ -46,4 +57,4 @@ if __name__ == "__main__":
     #visits = Visit.objects.filter(passcard=passcard)
     #print(visits)
 
-    #execute_from_command_line(['manage.py', 'runserver'])
+    execute_from_command_line(['manage.py', 'runserver'])
