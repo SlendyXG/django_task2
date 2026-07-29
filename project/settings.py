@@ -1,11 +1,10 @@
 import os
+
 from environs import Env
 
-# Загружаем переменные окружения из .env
 env = Env()
 env.read_env()
 
-# Сохраняем в переменные для ясности
 DB_HOST = env.str('DB_HOST')
 DB_PORT = env.str('DB_PORT')
 DB_PASSWORD = env.str('DB_PASSWORD')

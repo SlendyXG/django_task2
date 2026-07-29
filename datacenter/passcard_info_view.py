@@ -25,13 +25,9 @@ def is_visit_long(visit, minutes=60):
 
 
 def passcard_info_view(request, passcode):
-    # 1. Получаем пропуск по passcode из URL
     passcard = get_object_or_404(Passcard, passcode=passcode)
-
-    # 2. Получаем все визиты этого пропуска
     visits = Visit.objects.filter(passcard=passcard).order_by('-entered_at')
 
-    # 3. Формируем список визитов для шаблона
     this_passcard_visits = []
     for visit in visits:
         duration_seconds = get_duration(visit)
@@ -43,11 +39,9 @@ def passcard_info_view(request, passcode):
         }
         this_passcard_visits.append(visit_data)
 
-    # 4. Формируем контекст (словарь с данными для шаблона)
     context = {
-        'passcard': passcard,  # <-- передаем пропуск
-        'this_passcard_visits': this_passcard_visits  # <-- передаем список визитов
+        'passcard': passcard,
+        'this_passcard_visits': this_passcard_visits,
     }
 
-    # 5. Рендерим шаблон с контекстом
     return render(request, 'passcard_info.html', context)
