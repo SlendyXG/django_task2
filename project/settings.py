@@ -8,7 +8,7 @@ env.read_env()
 DB_HOST = env.str('DB_HOST')
 DB_PORT = env.str('DB_PORT')
 DB_PASSWORD = env.str('DB_PASSWORD')
-DB_SECRET_KEY = env.str('DB_SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 DATABASES = {
@@ -23,8 +23,6 @@ DATABASES = {
 }
 
 INSTALLED_APPS = ['datacenter']
-
-SECRET_KEY = SECRET_KEY
 
 DEBUG = DEBUG
 
