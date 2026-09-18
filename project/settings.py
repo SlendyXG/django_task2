@@ -24,6 +24,11 @@ DATABASES = {
 
 INSTALLED_APPS = ['datacenter']
 
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
 DEBUG = DEBUG
 
 ROOT_URLCONF = 'project.urls'
