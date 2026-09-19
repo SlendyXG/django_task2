@@ -5,20 +5,18 @@ from environs import Env
 env = Env()
 env.read_env()
 
-DB_HOST = env.str('DB_HOST')
-DB_PORT = env.str('DB_PORT')
-DB_PASSWORD = env.str('DB_PASSWORD')
-SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
+SECRET_KEY = env.str('SECRET_KEY')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'HOST': env.str('DB_HOST'),
+        'PORT': env.str('DB_PORT'),
         'NAME': 'checkpoint',
         'USER': 'guard',
-        'PASSWORD': DB_PASSWORD,
+        'PASSWORD': env.str('DB_PASSWORD'),
     }
 }
 
@@ -29,11 +27,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-DEBUG = DEBUG
-
 ROOT_URLCONF = 'project.urls'
-
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
